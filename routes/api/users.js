@@ -1,11 +1,11 @@
 var router = require('express').Router()
 var User = require('mongoose').model('Users')
 
-// router.get('/', function(req, res) {
-//     User.find().then(function(users) {
-//         return res.status(200).json({status: 200, data: users});
-//     })
-// })
+router.get('/', function(req, res) {
+    // User.find().then(function(users) {
+        return res.status(200).json({status: 200, data: "OK"});
+    // })
+})
 
 router.post('/', function(req, res) {
     let users = new User(req.body)
