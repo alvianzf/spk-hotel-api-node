@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect(db.url || db.staging, {
+mongoose.connect((db.url || db.staging), {
     useNewUrlParser: true
 }).then(function(docs) {
     console.log(db.url + ' connected')
