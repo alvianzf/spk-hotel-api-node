@@ -2,9 +2,9 @@ var router = require('express').Router()
 var User = require('mongoose').model('Users')
 
 router.get('/', function(req, res) {
-    // User.find().then(function(users) {
-        return res.status(200).json({status: 200, data: process.env.MONGODB_URI});
-    // })
+    User.find().then(function(users) {
+        return res.status(200).json({status: 200, data: users});
+    })
 })
 
 router.post('/', function(req, res) {
