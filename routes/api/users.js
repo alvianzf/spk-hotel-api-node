@@ -3,7 +3,7 @@ var User = require('mongoose').model('Users')
 
 router.get('/', function(req, res) {
     // User.find().then(function(users) {
-        return res.status(200).json({status: 200, data: "OK"});
+        return res.status(200).json({status: 200, data: process.env.MONGODB_URI});
     // })
 })
 
