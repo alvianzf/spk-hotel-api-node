@@ -91,7 +91,9 @@ router.get('/', function(req, res) {
 
     finalChoice = choices[finalMatrix.indexOf(choice)].name
 
-    return res.status(200).json({status: 200, choice: finalChoice});
+    // return res.status(200).json({status: 200, choice: finalChoice});
+
+    return res.status(200).json({status: 200, choice: 'OK'});
 })
 
 module.exports = router
