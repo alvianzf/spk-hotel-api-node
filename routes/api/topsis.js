@@ -109,15 +109,18 @@ router.get('/', function(req, res) {
 
     if (price < 200000)
         finalChoice = choices[0].name
+        distance = choices[0].distance
 
     if(price >= 200000 && price < 380000)
         finalChoice = choices[1].name
+        distance = choices[1].distance
     
     if(price > 380000)
         finalChoice = choices[3].name
+        distance = choices[1].distance
 
 
-    return res.status(200).json({status: 200, choice: finalChoice});
+    return res.status(200).json({status: 200, choice: finalChoice, distance});
 
     // return res.status(200).json({status: 200, choice: 'OK'});
 })
