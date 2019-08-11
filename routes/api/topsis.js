@@ -96,4 +96,8 @@ router.get('/', function(req, res) {
     // return res.status(200).json({status: 200, choice: 'OK'});
 })
 
+function sqRoot(arr) {
+    
+}
+
 module.exports = router
