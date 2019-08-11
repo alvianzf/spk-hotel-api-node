@@ -55,16 +55,10 @@ router.get('/', function(req, res) {
         preferenceMatrix.push(matrix)
     }
 
-    console.table(distMatrix)
-    console.table(rateMatrix)
-    console.table(preferenceMatrix)
-
     // Negative Ideal Solution (NIS)
     NIS.push(Math.min(...distMatrix))
     NIS.push(Math.min(...rateMatrix))
     NIS.push(Math.min(...preferenceMatrix))
-
-    console.table(NIS)
 
     // Positive Ideas Solution (PIS)
     PIS.push(Math.max(...distMatrix))
@@ -103,11 +97,6 @@ router.get('/', function(req, res) {
     index = finalMatrix.indexOf(choice)
 
     finalChoice = choices[index].name
-
-    // console.log('NIS')
-    // console.log(NIS)
-    // console.log('PIS')
-    // console.log(PIS)
 
     distMatrix = []
     rateMatrix = []
