@@ -98,19 +98,19 @@ router.get('/', function(req, res) {
 
     finalChoice = choices[index].name
 
-    // distMatrix = []
-    // rateMatrix = []
-    // preferenceMatrix = []
-    // negDet = []
-    // posDet = []
-    // finalMatrix = []
-    // PIS = []
-    // NIS = []
+    distMatrix = []
+    rateMatrix = []
+    preferenceMatrix = []
+    negDet = []
+    posDet = []
+    finalMatrix = []
+    PIS = []
+    NIS = []
 
 
-    return res.status(200).json({status: 200, choice: finalChoice});
+    // return res.status(200).json({status: 200, choice: finalChoice});
 
-    // return res.status(200).json({status: 200, choice: 'OK'});
+    return res.status(200).json({status: 200, choice: 'OK'});
 })
 
 module.exports = router
