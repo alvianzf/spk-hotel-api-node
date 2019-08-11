@@ -18,7 +18,7 @@ module.exports = [
         name: 'Paradise Hotel',
         distance: 2100,
         rate: 280440,
-        facilities: 4
+        facilities: 3
     },
     {
         id: 4,

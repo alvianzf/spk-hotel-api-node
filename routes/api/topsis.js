@@ -20,41 +20,51 @@ router.get('/', function(req, res) {
 
     // Distance normalization matrix
     for (var i = 0; i < choices.length; i++) {
-        distanceSq = distanceSq + (choices[i].distance/100)*(choices[i].distance/100)
+        distanceSq = distanceSq + ((10000-choices[i].distance)/100)*((10000-choices[i].distance)/100)
     }
     distanceSq = Math.sqrt(distanceSq)
 
     for (var i = 0; i < choices.length; i++) {
-        matrix = (choices[i].distance / distanceSq) * 30
+        matrix = (((10000-choices[i].distance)/100) / distanceSq) * 10
         distMatrix.push(matrix)
     }
     
     // Rate normalization matrix
     for (var i = 0; i < choices.length; i++) {
-        rateSq = rateSq + ((price - choices[i].rate)/100000)*((price - choices[i].rate)/100000)
+        temp = Math.abs(price - choices[i].rate)
+        rate = Math.abs(10 - temp)
+
+        rateSq = rateSq + rate
     }
     rateSq = Math.sqrt(rateSq)
 
     for (var i = 0; i < choices.length; i++) {
-        matrix = ((price - choices[i].rate) / rateSq) * 40
+        matrix = Math.abs((10 - Math.abs(price - choices[i].rate)) / rateSq) * 50
         rateMatrix.push(matrix)
     }
 
     // Facilities normalization matrix
     for (var i = 0; i < choices.length; i++) {
-        PrefSq = PrefSq + (preference - choices[i].facilities)*(preference - choices[i].facilities)
+        prefs = 100 - Math.abs(preference - choices[i].facilities)
+        PrefSq = PrefSq + (prefs*prefs)
     }
     PrefSq = Math.sqrt(PrefSq)
 
     for (var i = 0; i < choices.length; i++) {
-        matrix = (choices[i].facilities / PrefSq)
+        matrix = ((10 - Math.abs(preference - choices[i].facilities)) / PrefSq) * 30
         preferenceMatrix.push(matrix)
     }
+
+    console.table(distMatrix)
+    console.table(rateMatrix)
+    console.table(preferenceMatrix)
 
     // Negative Ideal Solution (NIS)
     NIS.push(Math.min(...distMatrix))
     NIS.push(Math.min(...rateMatrix))
     NIS.push(Math.min(...preferenceMatrix))
+
+    console.table(NIS)
 
     // Positive Ideas Solution (PIS)
     PIS.push(Math.max(...distMatrix))
@@ -63,34 +73,51 @@ router.get('/', function(req, res) {
 
     // Determinants Negative
     for (var i = 0; i < choices.length; i++) {
-        dist = (distMatrix[i] - NIS[0])*(distMatrix[i] - NIS[i])
+        dist = (distMatrix[i] - NIS[0])*(distMatrix[i] - NIS[0])
         rates = (rateMatrix[i] - NIS[1])*(rateMatrix[i] - NIS[1])
         prefs = (preferenceMatrix[i] - NIS[2])*(preferenceMatrix[i] - NIS[2])
+        
+        negDet.push(Math.sqrt((dist + rates +prefs)))
 
-        negDet.push(Math.sqrt(dist + rates +prefs))
     }
-    negDet.pop()
 
     // Determinants Positive
     for (var i = 0; i < choices.length; i++) {
-        dist = (distMatrix[i] - PIS[0])*(distMatrix[i] - PIS[i])
+        dist = (distMatrix[i] - PIS[0])*(distMatrix[i] - PIS[0])
         rates = (rateMatrix[i] - PIS[1])*(rateMatrix[i] - PIS[1])
         prefs = (preferenceMatrix[i] - PIS[2])*(preferenceMatrix[i] - PIS[2])
 
-        posDet.push(Math.sqrt(dist + rates +prefs))
+        posDet.push(Math.sqrt((dist + rates +prefs)))
+
     }
-    posDet.pop()
     
+
     // Preference Matrix 
 
     for(var i =0; i < negDet.length; i++) {
         finalMatrix.push(posDet[i]/(posDet[i]+negDet[i]))
     }
 
+
     choice = Math.max(...finalMatrix)
     index = finalMatrix.indexOf(choice)
-    
+
     finalChoice = choices[index].name
+
+    // console.log('NIS')
+    // console.log(NIS)
+    // console.log('PIS')
+    // console.log(PIS)
+
+    distMatrix = []
+    rateMatrix = []
+    preferenceMatrix = []
+    negDet = []
+    posDet = []
+    finalMatrix = []
+    PIS = []
+    NIS = []
+
 
     return res.status(200).json({status: 200, choice: finalChoice});
 
