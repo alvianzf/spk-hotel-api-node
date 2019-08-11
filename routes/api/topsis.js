@@ -120,7 +120,7 @@ router.get('/', function(req, res) {
         distance = choices[1].distance
 
 
-    return res.status(200).json({status: 200, choice: finalChoice, distance});
+    return res.status(200).json({status: 200, choice: finalChoice, distance: distance});
 
     // return res.status(200).json({status: 200, choice: 'OK'});
 })
