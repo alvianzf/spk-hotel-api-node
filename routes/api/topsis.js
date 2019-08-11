@@ -113,7 +113,7 @@ router.get('/', function(req, res) {
     if(price >= 200000 && price < 380000)
         finalChoice = choices[1].name
     
-    if(price > 3800000)
+    if(price > 380000)
         finalChoice = choices[3].name
 
 
