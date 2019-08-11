@@ -114,7 +114,7 @@ router.get('/', function(req, res) {
         finalChoice = choices[1].name
     
     if(price > 3800000)
-        finalChoice = choices[3.name]
+        finalChoice = choices[3].name
 
 
     return res.status(200).json({status: 200, choice: finalChoice});
